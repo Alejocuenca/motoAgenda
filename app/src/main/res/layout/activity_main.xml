@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="24dp"
+    android:gravity="center"
+    android:background="#FFFFFF"
+    android:id="@+id/main"
+    >
+
+    <!-- Logo de la aplicación -->
+    <ImageView
+        android:id="@+id/img_logo"
+        android:layout_width="204dp"
+        android:layout_height="188dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="48dp"
+        android:src="@drawable/ic_logo" />
+
+    <EditText
+        android:id="@+id/txt_usuario"
+        android:layout_width="286dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:hint="Usuario"
+        android:inputType="textPersonName" />
+
+    <EditText
+        android:id="@+id/txt_contrasena"
+        android:layout_width="288dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="24dp"
+        android:hint="Contraseña"
+        android:inputType="textPassword" />
+
+    <!-- Botón iniciar sesión -->
+    <Button
+        android:id="@+id/btn_iniciar_sesion"
+        android:layout_width="184dp"
+        android:layout_height="wrap_content"
+        android:backgroundTint="#f66001"
+        android:onClick="iniciarSesion"
+        android:text="Iniciar sesión"
+        android:textColor="#FFFFFF" />
+</LinearLayout>

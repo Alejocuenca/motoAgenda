@@ -1,5 +1,7 @@
 package com.example.motoagenda;
 
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.activity.EdgeToEdge;
@@ -9,6 +11,8 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.List;
 
@@ -20,6 +24,8 @@ public class HomeMototaxista extends AppCompatActivity {
     private List<Pasajero> ListaPasajeros;
     private BaseDeDatos baseDeDatos;
 
+    FloatingActionButton fab_agregar_pasajero, fab_calculadora;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +36,14 @@ public class HomeMototaxista extends AppCompatActivity {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
+        });
+
+        fab_agregar_pasajero = findViewById(R.id.fab_agregar_pasajero);
+        fab_calculadora = findViewById(R.id.fab_calculadora);
+
+        fab_agregar_pasajero.setOnClickListener(v -> {
+            Intent intent = new Intent(HomeMototaxista.this, AgregarPasajero.class);
+            startActivity(intent);
         });
 
         baseDeDatos = new BaseDeDatos(this);
@@ -47,7 +61,9 @@ public class HomeMototaxista extends AppCompatActivity {
         cargarDatosDesdeBD();
     }
     private void cargarDatosDesdeBD() {
-        ListaPasajeros = baseDeDatos.obtenerTodosLosPasajeros();
+        SharedPreferences prefsSesion = getSharedPreferences("sesion_actual", MODE_PRIVATE);
+        int idUsuario = prefsSesion.getInt("id_usuario", -1);
+        ListaPasajeros = baseDeDatos.obtenerTodosLosPasajeros(idUsuario);
 
         if (mAdapter == null) {
             mAdapter = new RecycleViewAdapter(ListaPasajeros, HomeMototaxista.this);

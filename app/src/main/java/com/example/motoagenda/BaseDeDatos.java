@@ -12,7 +12,7 @@ import java.util.List;
 public class BaseDeDatos extends SQLiteOpenHelper {
 
     private static final String NOMBRE_BD = "mi_app.db";
-    private static final int VERSION_BD = 1;
+    private static final int VERSION_BD = 2;
 
     public static final String TABLA_USUARIOS = "usuarios";
     public static final String COL_ID_USUARIO = "id_usuario";
@@ -73,8 +73,6 @@ public class BaseDeDatos extends SQLiteOpenHelper {
                 COL_GENERO + " TEXT, " +
                 COL_DEPORTE + " TEXT, " +
                 COL_OTROS_INTERESES + " TEXT, " +
-                COL_USUARIO + " TEXT NOT NULL, " +
-                COL_CONTRASENA + " TEXT NOT NULL, " +
                 COL_ID_CREADOR + " INTEGER NOT NULL, " +
                 "FOREIGN KEY(" + COL_ID_CREADOR + ") REFERENCES " + TABLA_USUARIOS + "(" + COL_ID_USUARIO + "));";
 
@@ -98,7 +96,7 @@ public class BaseDeDatos extends SQLiteOpenHelper {
             if (cantidad > 0) {
                 cursor.close();
                 db.close();
-                return; // Ya hay usuarios, no insertamos
+                return;
             }
         }
         cursor.close();
@@ -130,6 +128,34 @@ public class BaseDeDatos extends SQLiteOpenHelper {
         db.close();
     }
 
+    public boolean insertarPasajero(String nombre, String apellido, int edad, String correo, String direccion,
+                                    String institucion, String carrera, String anioGraduacion, String cursos,
+                                    String habilidades, String musica, String genero, String deporte,
+                                    String otrosIntereses, int idCreador) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues valores = new ContentValues();
+
+        valores.put("nombre", nombre);
+        valores.put("apellido", apellido);
+        valores.put("edad", edad);
+        valores.put("correo", correo);
+        valores.put("direccion", direccion);
+        valores.put("institucion", institucion);
+        valores.put("carrera", carrera);
+        valores.put("anio_graduacion", anioGraduacion);
+        valores.put("cursos", cursos);
+        valores.put("habilidades", habilidades);
+        valores.put("musica", musica);
+        valores.put("genero", genero);
+        valores.put("deporte", deporte);
+        valores.put("otros_intereses", otrosIntereses);
+        valores.put("id_creador", idCreador);
+
+        long resultado = db.insert("pasajeros", null, valores);
+        return resultado != -1;
+    }
+
+
     public void insertarPasajerosDePrueba() {
         SQLiteDatabase db = this.getWritableDatabase();
 
@@ -139,7 +165,7 @@ public class BaseDeDatos extends SQLiteOpenHelper {
             if (cantidad > 0) {
                 cursor.close();
                 db.close();
-                return; // Ya hay pasajeros, no insertamos
+                return;
             }
         }
         cursor.close();
@@ -160,9 +186,7 @@ public class BaseDeDatos extends SQLiteOpenHelper {
             pasajero.put("genero", (i % 2 == 0) ? "Masculino" : "Femenino");
             pasajero.put("deporte", "Fútbol, Natación");
             pasajero.put("otros_intereses", "Cine, Comida");
-            pasajero.put("usuario", "user" + i);
-            pasajero.put("contrasena", "pass" + i);
-            pasajero.put("id_creador", 2); // Asegúrate de que el mototaxista tenga ID = 2
+            pasajero.put("id_creador", 1);
 
             db.insert("pasajeros", null, pasajero);
         }
@@ -171,11 +195,12 @@ public class BaseDeDatos extends SQLiteOpenHelper {
     }
 
 
-    public List<Pasajero> obtenerTodosLosPasajeros() {
+    public List<Pasajero> obtenerTodosLosPasajeros(int idCreador) {
         List<Pasajero> listaPasajeros = new ArrayList<>();
         SQLiteDatabase db = this.getReadableDatabase();
 
-        Cursor cursor = db.rawQuery("SELECT * FROM " + TABLA_PASAJEROS, null);
+        Cursor cursor = db.rawQuery("SELECT * FROM " + TABLA_PASAJEROS + " WHERE id_creador = ?",
+                new String[]{String.valueOf(idCreador)}, null);
 
         if (cursor.moveToFirst()) {
             do {
@@ -195,8 +220,6 @@ public class BaseDeDatos extends SQLiteOpenHelper {
                 pasajero.setGenero(cursor.getString(cursor.getColumnIndexOrThrow(COL_GENERO)));
                 pasajero.setDeporte(cursor.getString(cursor.getColumnIndexOrThrow(COL_DEPORTE)));
                 pasajero.setOtrosIntereses(cursor.getString(cursor.getColumnIndexOrThrow(COL_OTROS_INTERESES)));
-                pasajero.setUsuario(cursor.getString(cursor.getColumnIndexOrThrow(COL_USUARIO)));
-                pasajero.setContrasena(cursor.getString(cursor.getColumnIndexOrThrow(COL_CONTRASENA)));
                 pasajero.setIdCreador(cursor.getInt(cursor.getColumnIndexOrThrow(COL_ID_CREADOR)));
 
                 listaPasajeros.add(pasajero);

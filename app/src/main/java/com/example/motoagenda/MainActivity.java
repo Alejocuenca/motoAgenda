@@ -2,6 +2,7 @@ package com.example.motoagenda;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -38,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
         btn_iniciar_sesion = findViewById(R.id.btn_iniciar_sesion);
 
         baseDeDatos = new BaseDeDatos(this);
-        baseDeDatos.insertarUsuariosDePrueba();
+        baseDeDatos.insertarUsuariosDePrueba(); //Elilminar esta linea
 
     }
 
@@ -51,13 +52,20 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
 
-        String tipoUsuario = verificarCredenciales(usuario, contrasena);
-        if (tipoUsuario != null) {
-            Toast.makeText(this, "Inicio de sesión exitoso como " + tipoUsuario, Toast.LENGTH_SHORT).show();
+        UsuarioAutenticado usuarioAutenticado = verificarCredenciales(usuario, contrasena);
 
-            if (tipoUsuario.equalsIgnoreCase("administrador")) {
+        if (usuarioAutenticado != null) {
+            Toast.makeText(this, "Inicio de sesión exitoso como " + usuarioAutenticado.tipo, Toast.LENGTH_SHORT).show();
 
-            } else if (tipoUsuario.equalsIgnoreCase("mototaxista")) {
+            SharedPreferences prefs = getSharedPreferences("sesion_actual", MODE_PRIVATE);
+            SharedPreferences.Editor editor = prefs.edit();
+            editor.putInt("id_usuario", usuarioAutenticado.id);
+            editor.putString("tipo_usuario", usuarioAutenticado.tipo.toLowerCase());
+            editor.apply();
+
+            if (usuarioAutenticado.tipo.equalsIgnoreCase("administrador")) {
+
+            } else if (usuarioAutenticado.tipo.equalsIgnoreCase("mototaxista")) {
                 Intent intent = new Intent(MainActivity.this, HomeMototaxista.class);
                 startActivity(intent);
             }
@@ -65,18 +73,36 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(this, "Credenciales incorrectas", Toast.LENGTH_SHORT).show();
         }
     }
+    
+    public class UsuarioAutenticado {
+        int id;
+        String tipo;
 
-    private String verificarCredenciales(String usuario, String contrasena) {
-        SQLiteDatabase db = baseDeDatos.getReadableDatabase();
-        String tipoUsuario = null;
-
-        Cursor cursor = db.rawQuery("SELECT tipo_usuario FROM usuarios WHERE usuario = ? AND contrasena = ?", new String[]{usuario, contrasena});
-        if (cursor.moveToFirst()) {
-            tipoUsuario = cursor.getString(0);
+        public UsuarioAutenticado(int id, String tipo) {
+            this.id = id;
+            this.tipo = tipo;
         }
+    }
+
+    private UsuarioAutenticado verificarCredenciales(String usuario, String contrasena) {
+        SQLiteDatabase db = baseDeDatos.getReadableDatabase();
+        UsuarioAutenticado usuarioAutenticado = null;
+
+        Cursor cursor = db.rawQuery(
+                "SELECT id_usuario, tipo_usuario FROM usuarios WHERE usuario = ? AND contrasena = ?",
+                new String[]{usuario, contrasena}
+        );
+
+        if (cursor.moveToFirst()) {
+            int id = cursor.getInt(0);
+            String tipo = cursor.getString(1);
+            usuarioAutenticado = new UsuarioAutenticado(id, tipo);
+        }
+
         cursor.close();
         db.close();
-        return tipoUsuario;
+        return usuarioAutenticado;
     }
+
 
 }

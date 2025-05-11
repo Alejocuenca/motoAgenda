@@ -12,7 +12,7 @@
         android:background="@color/verde">
 
         <ImageButton
-            android:id="@+id/btn_logout"
+            android:id="@+id/btn_volver"
             android:layout_width="65dp"
             android:layout_height="match_parent"
             android:background="@color/verde"
@@ -35,6 +35,242 @@
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="826dp"
+        android:layout_marginTop="?attr/actionBarSize">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="5dp"
+                android:text="Información Personal"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/et_nombre"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Nombre" />
+
+            <EditText
+                android:id="@+id/et_apellido"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Apellido" />
+
+            <EditText
+                android:id="@+id/et_edad"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Edad"
+                android:inputType="number" />
+
+            <EditText
+                android:id="@+id/et_correo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Correo electrónico"
+                android:inputType="textEmailAddress" />
+
+            <EditText
+                android:id="@+id/et_direccion"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Dirección" />
+
+            <!-- Información Académica -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="5dp"
+                android:text="Información Académica"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/et_institucion"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Nombre de la Institución" />
+
+            <EditText
+                android:id="@+id/et_titulo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Título Obtenido" />
+
+            <EditText
+                android:id="@+id/et_anio_graduacion"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Año de Graduación"
+                android:inputType="number" />
+
+            <EditText
+                android:id="@+id/et_cursos"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Cursos y Capacitaciones" />
+
+            <EditText
+                android:id="@+id/et_habilidades"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Habilidades" />
+
+            <!-- Preferencias -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="5dp"
+                android:text="Preferencias"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <!-- Música -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Música preferida:" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <CheckBox
+                    android:id="@+id/cb_salsa"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Salsa" />
+
+                <CheckBox
+                    android:id="@+id/cb_baladas"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Baladas" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <CheckBox
+                    android:id="@+id/cb_bachata"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Bachata" />
+
+                <CheckBox
+                    android:id="@+id/cb_rock"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Rock" />
+            </LinearLayout>
+
+            <!-- Género -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="Género:" />
+
+            <RadioGroup
+                android:id="@+id/rg_genero"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:id="@+id/rb_masculino"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Masculino" />
+
+                <RadioButton
+                    android:id="@+id/rb_femenino"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Femenino" />
+            </RadioGroup>
+
+            <!-- Deporte -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="Deporte favorito:" />
+
+            <Spinner
+                android:id="@+id/sp_deporte"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="Otros intereses:" />
+
+            <EditText
+                android:id="@+id/et_otros_intereses"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Ingrese otros intereses" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="20dp"
+                android:gravity="center"
+                android:weightSum="2"
+                android:paddingHorizontal="10dp"
+                android:baselineAligned="false">
+
+                <Button
+                    android:id="@+id/btn_cancelar_agregar_pasajero"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginEnd="8dp"
+                    android:backgroundTint="#f5a777"
+                    android:text="Cancelar"
+                    android:textColor="@android:color/white"
+                    android:padding="12dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp" />
+
+                <Button
+                    android:id="@+id/btn_agregar_pasajero"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginStart="8dp"
+                    android:backgroundTint="@color/naranja"
+                    android:text="Agregar Pasajero"
+                    android:textColor="@android:color/white"
+                    android:padding="12dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp" />
+            </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
+
 
 
 

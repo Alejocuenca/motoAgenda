@@ -11,43 +11,66 @@
         android:layout_height="?attr/actionBarSize"
         android:background="@color/verde">
 
-        <!-- Botón izquierdo -->
         <ImageButton
-            android:id="@+id/btn_left"
+            android:id="@+id/btn_logout"
             android:layout_width="65dp"
             android:layout_height="match_parent"
-            android:src="@drawable/ic_logout"
             android:background="@color/verde"
+            android:src="@drawable/ic_logout"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <!-- Título centrado -->
         <TextView
             android:id="@+id/title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:background="@color/verde"
             android:text="Pasajeros"
             android:textColor="@color/white"
             android:textSize="18sp"
-            android:background="@color/verde"
-            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"/>
+            app:layout_constraintTop_toTopOf="parent" />
 
-        <!-- Botón derecho -->
         <ImageButton
-            android:id="@+id/btn_right"
+            android:id="@+id/btn_buscar"
             android:layout_width="65dp"
             android:layout_height="match_parent"
-            android:src="@drawable/ic_buscar"
             android:background="@color/verde"
+            android:src="@drawable/ic_buscar"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
+            app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_listaPasajeros"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="?attr/actionBarSize"/>
 
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab_agregar_pasajero"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="16dp"
+        android:src="@drawable/ic_agregar_pasajero"
+        app:backgroundTint="@color/naranja"
+        app:tint="@color/white"/>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab_calculadora"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginBottom="80dp"
+        android:src="@drawable/ic_calculadora"
+        app:backgroundTint="@color/naranja"
+        app:tint="@color/white"/>
 
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

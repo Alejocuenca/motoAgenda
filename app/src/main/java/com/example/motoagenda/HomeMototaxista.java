@@ -46,6 +46,11 @@ public class HomeMototaxista extends AppCompatActivity {
             startActivity(intent);
         });
 
+        fab_calculadora.setOnClickListener(v -> {
+            Intent intent = new Intent(HomeMototaxista.this, Calculadora.class);
+            startActivity(intent);
+        });
+
         baseDeDatos = new BaseDeDatos(this);
         baseDeDatos.insertarPasajerosDePrueba();
 

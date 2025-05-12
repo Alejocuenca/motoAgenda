@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/main">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <!-- Barra superior -->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/barra_superior"
+            android:layout_width="0dp"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/verde"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
+
+            <ImageButton
+                android:id="@+id/btn_volver"
+                android:layout_width="65dp"
+                android:layout_height="match_parent"
+                android:background="@color/verde"
+                android:src="@drawable/ic_volver"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/verde"
+                android:text="Calculadora"
+                android:textColor="@color/white"
+                android:textSize="18sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <Spinner
+            android:id="@+id/spn_historial"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/barra_superior"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="8dp"/>
+
+        <TextView
+            android:id="@+id/txt_pantalla"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textSize="32sp"
+            android:gravity="end"
+            android:background="@android:color/darker_gray"
+            android:padding="16dp"
+            app:layout_constraintTop_toBottomOf="@id/spn_historial"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="8dp"/>
+
+        <GridLayout
+            android:id="@+id/grl_botones"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:columnCount="4"
+            android:padding="16dp"
+            android:rowCount="5"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/txt_pantalla">
+
+            <Button
+                android:id="@+id/btn_borrar_uno"
+                android:text="⌫" />
+
+            <Button
+                android:id="@+id/btn_limpiar"
+                android:text="C" />
+
+            <Button
+                android:id="@+id/btn_punto"
+                android:text="." />
+
+            <Button
+                android:id="@+id/btn_dividir"
+                android:text="/" />
+
+            <Button
+                android:id="@+id/btn_7"
+                android:text="7" />
+
+            <Button
+                android:id="@+id/btn_8"
+                android:text="8" />
+
+            <Button
+                android:id="@+id/btn_9"
+                android:text="9" />
+
+            <Button
+                android:id="@+id/btn_multiplicar"
+                android:text="*" />
+
+            <Button
+                android:id="@+id/btn_4"
+                android:text="4" />
+
+            <Button
+                android:id="@+id/btn_5"
+                android:text="5" />
+
+            <Button
+                android:id="@+id/btn_6"
+                android:text="6" />
+
+            <Button
+                android:id="@+id/btn_restar"
+                android:text="-" />
+
+            <Button
+                android:id="@+id/btn_1"
+                android:text="1" />
+
+            <Button
+                android:id="@+id/btn_2"
+                android:text="2" />
+
+            <Button
+                android:id="@+id/btn_3"
+                android:text="3" />
+
+            <Button
+                android:id="@+id/btn_sumar"
+                android:text="+" />
+
+            <Button
+                android:id="@+id/btn_0"
+                android:text="0" />
+
+            <Button
+                android:id="@+id/btn_igual"
+                android:text="=" />
+        </GridLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

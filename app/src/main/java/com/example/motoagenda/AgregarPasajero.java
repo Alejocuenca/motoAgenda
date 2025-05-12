@@ -130,10 +130,10 @@ public class AgregarPasajero extends AppCompatActivity {
 
         btn_cancelar_agregar_pasajero.setOnClickListener(v -> {
             AdministradorDatosTemporales.limpiarDatosTemporales(AgregarPasajero.this, idUsuario, tipoUsuario);
-            limpiarCampos();
             Intent intent = new Intent(AgregarPasajero.this, HomeMototaxista.class);
             startActivity(intent);
             finish();
+            limpiarCampos();
         });
 
         btn_agregar_pasajero.setOnClickListener(v -> {
@@ -181,10 +181,10 @@ public class AgregarPasajero extends AppCompatActivity {
             if (exito) {
                 AdministradorDatosTemporales.limpiarDatosTemporales(AgregarPasajero.this, idUsuario, tipoUsuario);
                 Toast.makeText(this, "Pasajero agregado correctamente", Toast.LENGTH_SHORT).show();
-                limpiarCampos();
                 Intent intent = new Intent(AgregarPasajero.this, HomeMototaxista.class);
                 startActivity(intent);
                 finish();
+                limpiarCampos();
             } else {
                 Toast.makeText(this, "Error al guardar el pasajero", Toast.LENGTH_SHORT).show();
             }

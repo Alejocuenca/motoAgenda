@@ -28,7 +28,7 @@ public class HomeMototaxista extends AppCompatActivity {
 
     FloatingActionButton fab_agregar_pasajero, fab_calculadora;
 
-    ImageButton btn_buscar;
+    ImageButton btn_buscar, btn_logout;
 
 
     @Override
@@ -50,6 +50,12 @@ public class HomeMototaxista extends AppCompatActivity {
                 Intent intent = new Intent(HomeMototaxista.this, BuscarPasajero.class);
                 startActivity(intent);
             }
+        });
+
+        btn_logout = findViewById(R.id.btn_logout);
+
+        btn_logout.setOnClickListener(v -> {
+            SesionHelper.cerrarSesion(this);
         });
 
         fab_agregar_pasajero = findViewById(R.id.fab_agregar_pasajero);

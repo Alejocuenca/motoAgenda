@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -108,6 +109,7 @@ public class Calculadora extends AppCompatActivity {
                 double segundoNumero = Double.parseDouble(entradaActual);
                 double resultado;
 
+
                 switch (operador) {
                     case "+": resultado = primerNumero + segundoNumero; break;
                     case "-": resultado = primerNumero - segundoNumero; break;
@@ -126,8 +128,12 @@ public class Calculadora extends AppCompatActivity {
 
                 String operacion = primerNumero + " " + operador + " " + segundoNumero + " = " + resultado;
                 historial.add(operacion);
-                guardarHistorialEnSharedPreferences();
+                adaptadorHistorial.clear();
+                adaptadorHistorial.addAll(historial);
                 adaptadorHistorial.notifyDataSetChanged();
+
+// Guardar historial por usuario
+                guardarHistorialEnSharedPreferences();
 
                 Map<String, String> datos = new HashMap<>();
                 datos.put("operacion_" + historial.size(), operacion);
@@ -165,30 +171,24 @@ public class Calculadora extends AppCompatActivity {
     }
 
     private void guardarHistorialEnSharedPreferences() {
-        SharedPreferences prefs = getSharedPreferences("historial_calculadora", MODE_PRIVATE);
-        SharedPreferences.Editor editor = prefs.edit();
-        editor.putInt("tamaño", historial.size());
-
-        for (int i = 0; i < historial.size(); i++) {
-            editor.putString("item_" + i, historial.get(i));
-        }
-
-        editor.apply();
+        AdministradorDatosTemporales.guardarHistorialCalculadora(this, idUsuario, tipoUsuario, historial);
     }
 
-    private void cargarHistorialDesdeSharedPreferences() {
-        SharedPreferences prefs = getSharedPreferences("historial_calculadora", MODE_PRIVATE);
-        int tamaño = prefs.getInt("tamaño", 0);
-        historial.clear();
 
-        for (int i = 0; i < tamaño; i++) {
-            historial.add(prefs.getString("item_" + i, ""));
-        }
+    private void cargarHistorialDesdeSharedPreferences() {
+        SharedPreferences prefsSesion = getSharedPreferences("sesion_actual", MODE_PRIVATE);
+        idUsuario = prefsSesion.getInt("id_usuario", -1);
+        tipoUsuario = prefsSesion.getString("tipo_usuario", "");
+
+        historial = AdministradorDatosTemporales.recuperarHistorialCalculadora(this, idUsuario, tipoUsuario);
 
         if (adaptadorHistorial != null) {
+            adaptadorHistorial.clear();
+            adaptadorHistorial.addAll(historial);
             adaptadorHistorial.notifyDataSetChanged();
         }
     }
+
 
 
 }

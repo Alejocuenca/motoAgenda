@@ -16,8 +16,6 @@ public class Pasajero {
     private String genero;
     private String deporte;
     private String otrosIntereses;
-    private String usuario;
-    private String contrasena;
     private int idCreador;
 
     // Constructor vacío
@@ -27,7 +25,7 @@ public class Pasajero {
     public Pasajero(int id, String nombre, String apellido, int edad, String correo, String direccion,
                     String institucion, String carrera, String anioGraduacion, String cursos,
                     String habilidades, String musica, String genero, String deporte,
-                    String otrosIntereses, String usuario, String contrasena, int idCreador) {
+                    String otrosIntereses, int idCreador) {
         this.id = id;
         this.nombre = nombre;
         this.apellido = apellido;
@@ -43,8 +41,6 @@ public class Pasajero {
         this.genero = genero;
         this.deporte = deporte;
         this.otrosIntereses = otrosIntereses;
-        this.usuario = usuario;
-        this.contrasena = contrasena;
         this.idCreador = idCreador;
     }
 
@@ -94,11 +90,6 @@ public class Pasajero {
     public String getOtrosIntereses() { return otrosIntereses; }
     public void setOtrosIntereses(String otrosIntereses) { this.otrosIntereses = otrosIntereses; }
 
-    public String getUsuario() { return usuario; }
-    public void setUsuario(String usuario) { this.usuario = usuario; }
-
-    public String getContrasena() { return contrasena; }
-    public void setContrasena(String contrasena) { this.contrasena = contrasena; }
 
     public int getIdCreador() { return idCreador; }
     public void setIdCreador(int idCreador) { this.idCreador = idCreador; }

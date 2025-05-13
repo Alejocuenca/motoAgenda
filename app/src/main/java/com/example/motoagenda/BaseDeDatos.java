@@ -231,5 +231,53 @@ public class BaseDeDatos extends SQLiteOpenHelper {
         return listaPasajeros;
     }
 
+    public Pasajero buscarPasajeroPorId(int idPasajero) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT * FROM pasajeros WHERE id_pasajero = ?", new String[]{String.valueOf(idPasajero)});
+
+        if (cursor.moveToFirst()) {
+            Pasajero pasajero = new Pasajero(
+                    cursor.getInt(cursor.getColumnIndexOrThrow("id_pasajero")),
+                    cursor.getString(cursor.getColumnIndexOrThrow("nombre")),
+                    cursor.getString(cursor.getColumnIndexOrThrow("apellido")),
+                    cursor.getInt(cursor.getColumnIndexOrThrow("edad")),
+                    cursor.getString(cursor.getColumnIndexOrThrow("correo")),
+                    cursor.getString(cursor.getColumnIndexOrThrow("direccion")),
+                    cursor.getString(cursor.getColumnIndexOrThrow("institucion")),
+                    cursor.getString(cursor.getColumnIndexOrThrow("carrera")),
+                    cursor.getString(cursor.getColumnIndexOrThrow("anio_graduacion")),
+                    cursor.getString(cursor.getColumnIndexOrThrow("cursos")),
+                    cursor.getString(cursor.getColumnIndexOrThrow("habilidades")),
+                    cursor.getString(cursor.getColumnIndexOrThrow("musica")),
+                    cursor.getString(cursor.getColumnIndexOrThrow("genero")),
+                    cursor.getString(cursor.getColumnIndexOrThrow("deporte")),
+                    cursor.getString(cursor.getColumnIndexOrThrow("otros_intereses")),
+                    cursor.getInt(cursor.getColumnIndexOrThrow("id_creador"))
+            );
+            cursor.close();
+            db.close();
+            return pasajero;
+        }
+
+        cursor.close();
+        db.close();
+        return null;
+    }
+
+    public boolean actualizarPasajero(int id, ContentValues valores) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        int resultado = db.update("pasajeros", valores, "id_pasajero = ?", new String[]{String.valueOf(id)});
+        db.close();
+        return resultado > 0;
+    }
+
+    public boolean eliminarPasajero(int id) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        int resultado = db.delete("pasajeros", "id_pasajero = ?", new String[]{String.valueOf(id)});
+        db.close();
+        return resultado > 0;
+    }
+
+
 }
 

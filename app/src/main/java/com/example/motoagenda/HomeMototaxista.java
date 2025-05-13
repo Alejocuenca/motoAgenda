@@ -3,6 +3,8 @@ package com.example.motoagenda;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.ImageButton;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -26,6 +28,8 @@ public class HomeMototaxista extends AppCompatActivity {
 
     FloatingActionButton fab_agregar_pasajero, fab_calculadora;
 
+    ImageButton btn_buscar;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +40,16 @@ public class HomeMototaxista extends AppCompatActivity {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
+        });
+
+        btn_buscar = findViewById(R.id.btn_buscar);
+
+        btn_buscar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(HomeMototaxista.this, BuscarPasajero.class);
+                startActivity(intent);
+            }
         });
 
         fab_agregar_pasajero = findViewById(R.id.fab_agregar_pasajero);

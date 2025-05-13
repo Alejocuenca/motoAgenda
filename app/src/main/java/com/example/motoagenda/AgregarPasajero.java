@@ -106,7 +106,7 @@ public class AgregarPasajero extends AppCompatActivity {
         rb_masculino = findViewById(R.id.rb_masculino);
         rb_femenino = findViewById(R.id.rb_femenino);
 
-        Spinner sp_deporte = findViewById(R.id.sp_deporte);
+        sp_deporte = findViewById(R.id.sp_deporte);
         ArrayAdapter<String> adapterDeportes = new ArrayAdapter<>(
                 this,
                 android.R.layout.simple_spinner_item,
@@ -162,7 +162,7 @@ public class AgregarPasajero extends AppCompatActivity {
             } else if (rb_femenino.isChecked()) {
                 genero = "Femenino";
             } else {
-                genero = "Masculino"; // Valor por defecto si no se selecciona nada
+                genero = "Masculino";
             }
 
             String preferenciasMusicales = "";
@@ -215,7 +215,6 @@ public class AgregarPasajero extends AppCompatActivity {
             });
         }
 
-        // ---------- RESTAURAR DATOS ----------
         Map<String, String> datosRecuperados = AdministradorDatosTemporales.recuperarDatosTemporales(this, idUsuario, tipoUsuario);
 
         for (Map.Entry<String, EditText> campo : campos.entrySet()) {
@@ -223,13 +222,11 @@ public class AgregarPasajero extends AppCompatActivity {
             if (valor != null) campo.getValue().setText(valor);
         }
 
-        // Restaurar CheckBox
         cb_salsa.setChecked("true".equals(datosRecuperados.get("salsa")));
         cb_baladas.setChecked("true".equals(datosRecuperados.get("baladas")));
         cb_bachata.setChecked("true".equals(datosRecuperados.get("bachata")));
         cb_rock.setChecked("true".equals(datosRecuperados.get("rock")));
 
-        // Guardar CheckBox automáticamente
         CompoundButton.OnCheckedChangeListener checkListener = (buttonView, isChecked) -> {
             Map<String, String> datos = new HashMap<>();
             datos.put(buttonView.getTag().toString(), String.valueOf(isChecked));

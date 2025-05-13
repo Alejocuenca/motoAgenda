@@ -270,6 +270,19 @@ public class BaseDeDatos extends SQLiteOpenHelper {
         return resultado > 0;
     }
 
+    public boolean actualizarUsuario(int id, ContentValues valores) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        int resultado = db.update("usuarios", valores, "id_usuario = ?", new String[]{String.valueOf(id)});
+        db.close();
+        return resultado > 0;
+    }
+
+    public boolean eliminarUsuario(int id) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        int resultado = db.delete("usuarios", "id_usuario = ?", new String[]{String.valueOf(id)});
+        db.close();
+        return resultado > 0;
+    }
 
 }
 

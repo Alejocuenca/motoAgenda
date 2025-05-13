@@ -18,10 +18,8 @@ public class Pasajero {
     private String otrosIntereses;
     private int idCreador;
 
-    // Constructor vacío
     public Pasajero() {}
 
-    // Constructor completo
     public Pasajero(int id, String nombre, String apellido, int edad, String correo, String direccion,
                     String institucion, String carrera, String anioGraduacion, String cursos,
                     String habilidades, String musica, String genero, String deporte,

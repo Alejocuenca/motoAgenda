@@ -12,7 +12,7 @@ import java.util.List;
 public class BaseDeDatos extends SQLiteOpenHelper {
 
     private static final String NOMBRE_BD = "mi_app.db";
-    private static final int VERSION_BD = 2;
+    private static final int VERSION_BD = 3;
 
     public static final String TABLA_USUARIOS = "usuarios";
     public static final String COL_ID_USUARIO = "id_usuario";
@@ -54,7 +54,9 @@ public class BaseDeDatos extends SQLiteOpenHelper {
                 COL_DIRECCION + " TEXT NOT NULL, " +
                 COL_USUARIO + " TEXT NOT NULL, " +
                 COL_CONTRASENA + " TEXT NOT NULL, " +
-                COL_TIPO_USUARIO + " TEXT NOT NULL);";
+                COL_TIPO_USUARIO + " TEXT NOT NULL," +
+                COL_ID_CREADOR + " INTEGER NOT NULL, " +
+                "FOREIGN KEY(" + COL_ID_CREADOR + ") REFERENCES " + TABLA_USUARIOS + "(" + COL_ID_USUARIO + "));";
 
 
         String crearTablaPasajeros = "CREATE TABLE " + TABLA_PASAJEROS + " (" +
@@ -111,6 +113,7 @@ public class BaseDeDatos extends SQLiteOpenHelper {
         admin.put("usuario", "admin");
         admin.put("contrasena", "admin123");
         admin.put("tipo_usuario", "administrador");
+        admin.put("id_creador", 99);
         db.insert("usuarios", null, admin);
 
 
@@ -123,7 +126,20 @@ public class BaseDeDatos extends SQLiteOpenHelper {
         mototaxista.put("usuario", "mototaxi");
         mototaxista.put("contrasena", "moto123");
         mototaxista.put("tipo_usuario", "mototaxista");
+        mototaxista.put("id_creador", 1);
         db.insert("usuarios", null, mototaxista);
+
+        ContentValues mototaxista2 = new ContentValues();
+        mototaxista2.put("nombre", "Juanes");
+        mototaxista2.put("apellido", "Lopez");
+        mototaxista2.put("edad", 19);
+        mototaxista2.put("correo", "juanes@ejemplo.com");
+        mototaxista2.put("direccion", "Calle 10 #7-20");
+        mototaxista2.put("usuario", "juanes");
+        mototaxista2.put("contrasena", "juanes123");
+        mototaxista2.put("tipo_usuario", "mototaxista");
+        mototaxista2.put("id_creador", 1);
+        db.insert("usuarios", null, mototaxista2);
 
         db.close();
     }
@@ -155,44 +171,6 @@ public class BaseDeDatos extends SQLiteOpenHelper {
         return resultado != -1;
     }
 
-
-    public void insertarPasajerosDePrueba() {
-        SQLiteDatabase db = this.getWritableDatabase();
-
-        Cursor cursor = db.rawQuery("SELECT COUNT(*) FROM pasajeros", null);
-        if (cursor.moveToFirst()) {
-            int cantidad = cursor.getInt(0);
-            if (cantidad > 0) {
-                cursor.close();
-                db.close();
-                return;
-            }
-        }
-        cursor.close();
-
-        for (int i = 1; i <= 10; i++) {
-            ContentValues pasajero = new ContentValues();
-            pasajero.put("nombre", "Pasajero" + i);
-            pasajero.put("apellido", "Apellido" + i);
-            pasajero.put("edad", 20 + i);
-            pasajero.put("correo", "pasajero" + i + "@ejemplo.com");
-            pasajero.put("direccion", "Calle " + i + " #45-67");
-            pasajero.put("institucion", "Institución " + i);
-            pasajero.put("carrera", "Carrera " + i);
-            pasajero.put("anio_graduacion", "202" + (i % 10));
-            pasajero.put("cursos", "Curso A, Curso B");
-            pasajero.put("habilidades", "Habilidad X, Habilidad Y");
-            pasajero.put("musica", "Rock, Pop");
-            pasajero.put("genero", (i % 2 == 0) ? "Masculino" : "Femenino");
-            pasajero.put("deporte", "Fútbol, Natación");
-            pasajero.put("otros_intereses", "Cine, Comida");
-            pasajero.put("id_creador", 1);
-
-            db.insert("pasajeros", null, pasajero);
-        }
-
-        db.close();
-    }
 
 
     public List<Pasajero> obtenerTodosLosPasajeros(int idCreador) {
@@ -231,37 +209,34 @@ public class BaseDeDatos extends SQLiteOpenHelper {
         return listaPasajeros;
     }
 
-    public Pasajero buscarPasajeroPorId(int idPasajero) {
+    public List<Administrador> obtenerTodosLosUsuarios(int idCreador) {
+        List<Administrador> listaUsuarios = new ArrayList<>();
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.rawQuery("SELECT * FROM pasajeros WHERE id_pasajero = ?", new String[]{String.valueOf(idPasajero)});
+
+        Cursor cursor = db.rawQuery("SELECT * FROM " + TABLA_USUARIOS + " WHERE id_creador = ?",
+                new String[]{String.valueOf(idCreador)}, null);
 
         if (cursor.moveToFirst()) {
-            Pasajero pasajero = new Pasajero(
-                    cursor.getInt(cursor.getColumnIndexOrThrow("id_pasajero")),
-                    cursor.getString(cursor.getColumnIndexOrThrow("nombre")),
-                    cursor.getString(cursor.getColumnIndexOrThrow("apellido")),
-                    cursor.getInt(cursor.getColumnIndexOrThrow("edad")),
-                    cursor.getString(cursor.getColumnIndexOrThrow("correo")),
-                    cursor.getString(cursor.getColumnIndexOrThrow("direccion")),
-                    cursor.getString(cursor.getColumnIndexOrThrow("institucion")),
-                    cursor.getString(cursor.getColumnIndexOrThrow("carrera")),
-                    cursor.getString(cursor.getColumnIndexOrThrow("anio_graduacion")),
-                    cursor.getString(cursor.getColumnIndexOrThrow("cursos")),
-                    cursor.getString(cursor.getColumnIndexOrThrow("habilidades")),
-                    cursor.getString(cursor.getColumnIndexOrThrow("musica")),
-                    cursor.getString(cursor.getColumnIndexOrThrow("genero")),
-                    cursor.getString(cursor.getColumnIndexOrThrow("deporte")),
-                    cursor.getString(cursor.getColumnIndexOrThrow("otros_intereses")),
-                    cursor.getInt(cursor.getColumnIndexOrThrow("id_creador"))
-            );
-            cursor.close();
-            db.close();
-            return pasajero;
+            do {
+                Administrador administrador = new Administrador();
+                administrador.setId(cursor.getInt(cursor.getColumnIndexOrThrow(COL_ID_USUARIO)));
+                administrador.setNombre(cursor.getString(cursor.getColumnIndexOrThrow(COL_NOMBRE)));
+                administrador.setApellido(cursor.getString(cursor.getColumnIndexOrThrow(COL_APELLIDO)));
+                administrador.setEdad(cursor.getInt(cursor.getColumnIndexOrThrow(COL_EDAD)));
+                administrador.setCorreo(cursor.getString(cursor.getColumnIndexOrThrow(COL_CORREO)));
+                administrador.setDireccion(cursor.getString(cursor.getColumnIndexOrThrow(COL_DIRECCION)));
+                administrador.setUsuario(cursor.getString(cursor.getColumnIndexOrThrow(COL_USUARIO)));
+                administrador.setContrasena(cursor.getString(cursor.getColumnIndexOrThrow(COL_CONTRASENA)));
+                administrador.setTipoUsuario(cursor.getString(cursor.getColumnIndexOrThrow(COL_TIPO_USUARIO)));
+                administrador.setIdCreador(cursor.getInt(cursor.getColumnIndexOrThrow(COL_ID_CREADOR)));
+
+                listaUsuarios.add(administrador);
+            } while (cursor.moveToNext());
         }
 
         cursor.close();
         db.close();
-        return null;
+        return listaUsuarios;
     }
 
     public boolean actualizarPasajero(int id, ContentValues valores) {

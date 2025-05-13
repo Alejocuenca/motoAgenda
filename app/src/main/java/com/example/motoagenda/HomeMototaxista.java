@@ -72,7 +72,6 @@ public class HomeMototaxista extends AppCompatActivity {
         });
 
         baseDeDatos = new BaseDeDatos(this);
-        baseDeDatos.insertarPasajerosDePrueba();
 
         recyclerView = findViewById(R.id.rv_listaPasajeros);
         recyclerView.setHasFixedSize(true);

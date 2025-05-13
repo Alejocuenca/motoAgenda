@@ -13,6 +13,9 @@
         android:theme="@style/Theme.MotoAgenda"
         tools:targetApi="31">
         <activity
+            android:name=".HomeAdministrador"
+            android:exported="false" />
+        <activity
             android:name=".BuscarPasajero"
             android:exported="false" />
         <activity

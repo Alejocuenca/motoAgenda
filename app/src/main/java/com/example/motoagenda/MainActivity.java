@@ -64,7 +64,8 @@ public class MainActivity extends AppCompatActivity {
             editor.apply();
 
             if (usuarioAutenticado.tipo.equalsIgnoreCase("administrador")) {
-
+                Intent intent = new Intent(MainActivity.this, HomeAdministrador.class);
+                startActivity(intent);
             } else if (usuarioAutenticado.tipo.equalsIgnoreCase("mototaxista")) {
                 Intent intent = new Intent(MainActivity.this, HomeMototaxista.class);
                 startActivity(intent);

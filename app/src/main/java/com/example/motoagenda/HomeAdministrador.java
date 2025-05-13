@@ -1,5 +1,6 @@
 package com.example.motoagenda;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
@@ -11,6 +12,8 @@ import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,6 +24,7 @@ public class HomeAdministrador extends AppCompatActivity {
     private RecyclerView.LayoutManager layoutManager ;
     private List<Administrador> ListaAdministradores = new ArrayList<Administrador>();
     private BaseDeDatos baseDeDatos;
+    FloatingActionButton fab_agregar_usuario;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +49,13 @@ public class HomeAdministrador extends AppCompatActivity {
 
         baseDeDatos = new BaseDeDatos(this);
         cargarDatosDesdeBD();
+
+        fab_agregar_usuario = findViewById(R.id.fab_agregar_usuario);
+
+        fab_agregar_usuario.setOnClickListener(v -> {
+            Intent intent = new Intent(HomeAdministrador.this, AgregarUsuario.class);
+            startActivity(intent);
+        });
     }
     private void cargarDatosDesdeBD() {
         SharedPreferences prefsSesion = getSharedPreferences("sesion_actual", MODE_PRIVATE);

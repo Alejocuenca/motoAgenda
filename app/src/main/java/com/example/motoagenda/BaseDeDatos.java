@@ -171,7 +171,24 @@ public class BaseDeDatos extends SQLiteOpenHelper {
         return resultado != -1;
     }
 
+    public boolean insertarUsuario(String nombre, String apellido, int edad, String correo, String direccion,
+                                    String usuario, String contrasena, String tipoUsuario, int idCreador) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues valores = new ContentValues();
 
+        valores.put("nombre", nombre);
+        valores.put("apellido", apellido);
+        valores.put("edad", edad);
+        valores.put("correo", correo);
+        valores.put("direccion", direccion);
+        valores.put("usuario", usuario);
+        valores.put("contrasena", contrasena);
+        valores.put("tipo_usuario", tipoUsuario);
+        valores.put("id_creador", idCreador);
+
+        long resultado = db.insert("usuarios", null, valores);
+        return resultado != -1;
+    }
 
     public List<Pasajero> obtenerTodosLosPasajeros(int idCreador) {
         List<Pasajero> listaPasajeros = new ArrayList<>();

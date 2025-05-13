@@ -70,6 +70,12 @@ public class HomeAdministrador extends AppCompatActivity {
             Intent intent = new Intent(HomeAdministrador.this, AgregarUsuario.class);
             startActivity(intent);
         });
+
+        btn_logout = findViewById(R.id.btn_logout);
+
+        btn_logout.setOnClickListener(v -> {
+            SesionHelper.cerrarSesion(this);
+        });
     }
     private void cargarDatosDesdeBD() {
         SharedPreferences prefsSesion = getSharedPreferences("sesion_actual", MODE_PRIVATE);
